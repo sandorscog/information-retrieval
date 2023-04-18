@@ -1,10 +1,32 @@
 import pandas as pd
 import json as js
+from pre_processor import pre_process
+
+# /home/vboxuser/TP1/information-retrieval/corpus.jsonl
+
+
+def chunk_handler(chunk):
+    print(type(chunk['text']))
+    texts = chunk['text']
+
+    for i in texts:
+        pre_process(i)
 
 
 def load_data(path: str):
 
-    with pd.read_json(path, lines=True, chunksize=2) as reader:
+    total = 0
+    div = 0
+
+    with pd.read_json(path, lines=True, chunksize=100000) as reader:
 
         for chunk in reader:
-            print(chunk)
+            # print(chunk.memory_usage(deep=True).sum())
+            total += chunk.memory_usage(deep=True).sum()
+            div += 1
+            chunk_handler(chunk)
+
+    print(total/div)
+
+
+

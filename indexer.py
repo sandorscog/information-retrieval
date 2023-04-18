@@ -2,7 +2,8 @@ import sys
 import resource
 import argparse
 
-from data import load_data
+from stream_reader import load_data
+#from data import load_data
 
 # To change:
 PATH = 'C:/Users/Desktop/Desktop/Misc/UFMG/Isolada/23_1/RI'
@@ -17,12 +18,12 @@ def memory_limit(value):
     resource.setrlimit(resource.RLIMIT_AS, (limit, limit))
 
 
-def main():
+def main(data_path, index_path):
     """
     Your main calls should be added here
     """
-
-    load_data(PATH)
+    print(corpus_path)
+    load_data(data_path)
 
     pass
 
@@ -37,10 +38,26 @@ if __name__ == "__main__":
         type=int,
         help='memory available'
     )
+
+    # Other command line arguments
+    parser.add_argument('-c', type=str, dest='corpus_path', action='store')
+    parser.add_argument('-i', type=str, dest='final_index_path', action='store')
+
+    # - # - # - # - # - # - # - # - # - #
+
     args = parser.parse_args()
     memory_limit(args.memory_limit)
+
+    ###
+    corpus_path = args.corpus_path
+    print(corpus_path)
+    final_index_path = args.final_index_path
+    print(final_index_path)
+
+
+    ###
     try:
-        main()
+        main(corpus_path, final_index_path)
     except MemoryError:
         sys.stderr.write('\n\nERROR: Memory Exception\n')
         sys.exit(1)
