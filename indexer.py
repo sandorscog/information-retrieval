@@ -8,6 +8,9 @@ from stream_reader import load_data
 # To change:
 PATH = 'C:/Users/Desktop/Desktop/Misc/UFMG/Isolada/23_1/RI'
 
+DATA_PATH = '/home/vboxuser/TP1/information-retrieval/corpus.jsonl'
+#DATA_PATH = '/home/vboxuser/TP1/information-retrieval/sliced.json'
+
 # - # - # - # - # - # - # - # - # - #
 
 MEGABYTE = 1024 * 1024
@@ -23,7 +26,8 @@ def main(data_path, index_path):
     Your main calls should be added here
     """
     print(corpus_path)
-    load_data(data_path)
+    #load_data(data_path)
+    load_data(DATA_PATH)
 
     pass
 
@@ -34,7 +38,7 @@ if __name__ == "__main__":
         '-m',
         dest='memory_limit',
         action='store',
-        required=True,
+        #required=True,
         type=int,
         help='memory available'
     )
@@ -46,7 +50,8 @@ if __name__ == "__main__":
     # - # - # - # - # - # - # - # - # - #
 
     args = parser.parse_args()
-    memory_limit(args.memory_limit)
+    #memory_limit(args.memory_limit)
+    memory_limit(1024)
 
     ###
     corpus_path = args.corpus_path
