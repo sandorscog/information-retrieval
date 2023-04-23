@@ -8,7 +8,7 @@ nltk.download('stopwords')
 nltk.download('punkt')
 
 
-def pre_process(text: str):
+def pre_process(text: str) -> list:
     snowball = SnowballStemmer(language='english')
     stop_words = set(stopwords.words('english'))
     text = text.lower()

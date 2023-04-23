@@ -52,6 +52,7 @@ if __name__ == "__main__":
     args = parser.parse_args()
     #memory_limit(args.memory_limit)
     memory_limit(1024)
+    #memory_limit(4096)
 
     ###
     corpus_path = args.corpus_path

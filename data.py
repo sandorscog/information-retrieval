@@ -10,7 +10,8 @@ def chunk_handler(chunk):
     texts = chunk['text']
 
     for i in texts:
-        pre_process(i)
+        text_tokens = pre_process(i)
+        print(text_tokens, flush=True)
 
 
 def load_data(path: str):
