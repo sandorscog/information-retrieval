@@ -3,6 +3,7 @@ import resource
 import argparse
 
 from stream_reader import load_data
+from final_operations import merge_index
 #from data import load_data
 
 # To change:
@@ -26,8 +27,8 @@ def main(data_path, index_path):
     Your main calls should be added here
     """
     print(corpus_path)
-    #load_data(data_path)
     load_data(DATA_PATH)
+    #merge_index()
 
     pass
 
