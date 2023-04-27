@@ -4,6 +4,7 @@ from pre_processor import pre_process
 from sys import getsizeof
 from collections import Counter
 import pickle
+import os
 
 # /home/vboxuser/TP1/information-retrieval/corpus.jsonl
 # /home/vboxuser/TP1/information-retrieval/tests
@@ -20,7 +21,7 @@ def chunk_handler(chunk):
         'title': []
     }).astype(int)
 
-    print('mariana')
+    #print('m')
     for i, row in chunk.iterrows():
 
         tokens = pre_process(row['text'])
@@ -50,10 +51,14 @@ def chunk_handler(chunk):
     with open('indexes/partial_index_' + str(chunk.iloc[0].id) + '.pkl', 'wb') as f:
         pickle.dump(index, f)
 
-    print('Fim')
+    #print('Fim')
 
 
 def load_data(path: str):
+
+
+    os.makedirs('doc_infos/')
+    os.makedirs('indexes/')
 
     with pd.read_json(path, lines=True, chunksize=10_000) as reader:
 

@@ -5,18 +5,16 @@ from collections import Counter
 from sys import getsizeof
 
 
-def merge_index():
+def merge_index(index_path):
 
-    '''
-    # final_index = {}
-
-    # num_of_keys = []
+    num_of_keys = []
     os.makedirs('term_lists/')
+    os.makedirs(index_path)
 
     for file in os.listdir('indexes/'):
         with open('indexes/' + file, 'rb') as f:
             partial_index = pickle.load(f)
-            # num_of_keys.extend(partial_index)
+            num_of_keys.extend(partial_index)
 
             for key in partial_index.keys():
                 try:
@@ -29,17 +27,12 @@ def merge_index():
                             term_file.write(tf_bytes)
 
                 except Exception as e:
-                    print(e)
+                    pass
+                    #print(e)
 
-            for key in partial_index.keys():
-                if key in final_index:
-                    final_index[key].extend(partial_index[key])
-                else:
-                    final_index[key] = partial_index[key]
+           
 
-            print(getsizeof(final_index))'''
-
-    print('term indexes done')
+    #print('term indexes done')
 
     # Create term lexicon and merge all the partial indexes
     start_of_term = 0
@@ -53,17 +46,29 @@ def merge_index():
         lexic_tuple = (file, start_of_term, df)
 
         # Add reference to lexic
-        with open('lexic.txt', 'a') as lexic:
+        with open(index_path + 'lexic.txt', 'a') as lexic:
             lexic.write(str(lexic_tuple) + '\n')
 
         # Add to index
-        with open('index', 'ab') as index:
+        with open(index_path + 'index', 'ab') as index:
             index.write(byte_sequence)
 
         start_of_term += len(byte_sequence)
+            
+    
+    path_final_docinfos = index_path + 'doc_index.csv' 
+    for file in os.listdir('doc_infos/'):
+        partial_frame = pd.read_csv('doc_infos/' + file)
+        partial_frame.to_csv(path_final_docinfos, mode='a', header=not os.path.exists(path_final_docinfos), index=False)
 
-    # print(len(set(num_of_keys)))
-    print('done')
+    num_of_keys = len(set(num_of_keys))
+    size = os.path.getsize(index_path + 'index')
+    avg_list_size = (size/8)/num_of_keys
+    size_in_mb = int(size/1_048_576)
+    
+    #print('done')
+    
+    return size_in_mb, num_of_keys, avg_list_size
 
 
 # testes
@@ -83,6 +88,6 @@ def visualise():
         print(len(byte_sequence))
 
 
-merge_index()
+#merge_index()
 # visualise()
 # 18489784
