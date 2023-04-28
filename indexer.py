@@ -81,7 +81,6 @@ if __name__ == "__main__":
     ###
     try:
         main(corpus_path, final_index_path)
-        #main(corpus_path, '')
     except MemoryError:
         sys.stderr.write('\n\nERROR: Memory Exception\n')
         sys.exit(1)

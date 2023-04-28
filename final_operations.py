@@ -6,15 +6,14 @@ from sys import getsizeof
 
 
 def merge_index(index_path):
-
-    num_of_keys = set()
+    
+    
     os.makedirs('term_lists/')
     os.makedirs(index_path)
 
     for file in os.listdir('indexes/'):
         with open('indexes/' + file, 'rb') as f:
             partial_index = pickle.load(f)
-            num_of_keys.update(partial_index)
 
             for key in partial_index.keys():
                 try:
@@ -28,12 +27,12 @@ def merge_index(index_path):
 
                 except Exception as e:
                     pass
-                    print(e)
+                    #print(e)
 
            
-
+    
     print('term indexes done')
-
+    
     # Create term lexicon and merge all the partial indexes
     start_of_term = 0
     for file in os.listdir('term_lists/'):
@@ -61,7 +60,7 @@ def merge_index(index_path):
         partial_frame = pd.read_csv('doc_infos/' + file)
         partial_frame.to_csv(path_final_docinfos, mode='a', header=not os.path.exists(path_final_docinfos), index=False)
 
-    num_of_keys = len(num_of_keys)
+    num_of_keys = len(os.listdir('term_lists/'))
     size = os.path.getsize(index_path + 'index')
     avg_list_size = (size/8)/num_of_keys
     size_in_mb = int(size/1_048_576)
