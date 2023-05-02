@@ -32,7 +32,10 @@ def main(data_path, index_path):
     
     #print(corpus_path)
     load_data(data_path)
-    size, num_of_keys, avg_list_size = merge_index(index_path)
+    load_time = time.time()
+    print('load: ', load_time - start_time)
+    size, num_of_keys, avg_list_size = merge_index(index_path, start_time)
+
 
     end_time = time.time()
     elapse = end_time - start_time

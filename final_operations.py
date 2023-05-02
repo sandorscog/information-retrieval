@@ -3,15 +3,19 @@ import pandas as pd
 import os
 from collections import Counter
 from sys import getsizeof
+import time
 
 
-def merge_index(index_path):
+def merge_index(index_path, start_time):
     
     
     os.makedirs('term_lists/')
     os.makedirs(index_path)
 
-    for file in os.listdir('indexes/'):
+    files_in_directory = os.listdir('indexes/')
+    files_in_directory.sort()
+
+    for file in files_in_directory:
         with open('indexes/' + file, 'rb') as f:
             partial_index = pickle.load(f)
 
@@ -32,6 +36,8 @@ def merge_index(index_path):
            
     
     print('term indexes done')
+    terms_time = time.time()
+    print('terms: ', terms_time - start_time)
     
     # Create term lexicon and merge all the partial indexes
     start_of_term = 0
@@ -66,6 +72,8 @@ def merge_index(index_path):
     size_in_mb = int(size/1_048_576)
     
     print('done')
+    merge_time = time.time()
+    print('merge: ', merge_time - start_time)
     
     return size_in_mb, num_of_keys, avg_list_size
 
